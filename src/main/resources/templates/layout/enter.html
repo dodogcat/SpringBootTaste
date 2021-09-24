@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>입구입니당</title>
+    <style>
+        .asdf{
+            position: absolute;
+            top: 400px;
+            left: 100px;
+            font-size:xx-large;
+        }
+    </style>
+</head>
+<body>
+    <div class="asdf">
+        <a href="/board/list">입구</a>
+    </div>
+    <script>
+        const move = document.getElementsByClassName("asdf");
+        // const move = document.getElementsByTagName("a");
+        // alert(move[0].innerText);
+        move[0].style.color = "red";
+        move[0].style.borderColor = "red";
+        move[0].style.left = "600px";
+        for(let i=1; i < 200; i++){
+            move[0].style.left = "".concat(toString(i), "px");
+            move[0].style.top = "".concat(toString(i), "px");
+            setTimeout(function(){
+                // alert("asdf");
+            },1000);
+            move[0].style.borderColor = "green";
+        }
+    </script>
+</body>
+</html>

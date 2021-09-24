@@ -23,7 +23,7 @@ import com.acma.board.repository.BoardRepository;
 import com.acma.board.service.BoardService;
 
 @Controller
-@RequestMapping("/board")
+@RequestMapping("/")
 public class BoardController {
 
     @Autowired
@@ -33,9 +33,17 @@ public class BoardController {
     private BoardRepository boardRepository;
 
     /*
+     * 기본 주소 설정
+     */
+    @GetMapping({"", "/"})
+    public String enter() {
+        return "/layout/enter";
+    }
+
+    /*
      * 게시글 목록
      */
-    @GetMapping("/list")
+    @GetMapping("/board/list")
     public String list(@PageableDefault Pageable pageable, Model model) {
         model.addAttribute("boardList", boardService.findBoardList(pageable));
         return "/board/list";
@@ -44,7 +52,7 @@ public class BoardController {
     /*
      * 게시글 상세 및 등록 폼 호출
      */
-    @GetMapping({"", "/"})
+    @GetMapping({"board", "/board"})
     public String board(@RequestParam(value = "idx", defaultValue = "0") Long idx, Model model) {
         model.addAttribute("board", boardService.findBoardByIdx(idx));
         return "/board/form";
@@ -65,7 +73,7 @@ public class BoardController {
     /*
      * 게시글 수정
      */
-    @PutMapping("/{idx}")
+    @PutMapping("/board/{idx}")
     public ResponseEntity<?> putBoard(@PathVariable("idx") Long idx, @RequestBody Board board) {
         Board updateBoard = boardRepository.getOne(idx);
         updateBoard.setTitle(board.getTitle());
@@ -79,7 +87,7 @@ public class BoardController {
     /*
      * 게시글 삭제
      */
-    @DeleteMapping("/{idx}")
+    @DeleteMapping("/board/{idx}")
     public ResponseEntity<?> deleteBoard(@PathVariable("idx") Long idx) {
         boardRepository.deleteById(idx);
         return new ResponseEntity<>("{}", HttpStatus.OK);
